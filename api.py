@@ -75,3 +75,20 @@ def api_update_task(task_id):
         return jsonify({"status": "error", "message": str(e)}), 500
     
     
+@api_bp.route('/tasks/<int:task_id>', methods=['DELETE'])
+def api_delete_task(task_id):
+    """DELETE: Erases a task by its ID from the system"""
+    try:
+        db = connect_db()
+        cur = db.execute('select task_id from ftasks where task_id = ?', [task_id])
+        if not cur.fetchone():
+            db.close()
+            return jsonify({"status": "error", "message": "Task not found"}), 404
+
+        db.execute('delete from ftasks where task_id = ?', [task_id])
+        db.commit()
+        db.close()
+        return jsonify({"status": "success", "message": "Task deleted successfully"}), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+    
