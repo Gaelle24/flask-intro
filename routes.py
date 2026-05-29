@@ -111,6 +111,9 @@ def log():
 			session['logged_in'] = True
 			return redirect(url_for('tasks'))
     return render_template('log.html', error=error)
+
+from api import api_bp
+app.register_blueprint(api_bp, url_prefix='/api')
 		
 if __name__ == '__main__':
 	app.run(debug=True)
