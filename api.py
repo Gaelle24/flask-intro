@@ -17,3 +17,29 @@ def api_get_tasks():
         return jsonify({"status": "success", "tasks": tasks}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+    
+@api_bp.route('/tasks', methods=['POST'])
+def api_create_task():
+    """CREATE: Adds a new task using JSON input data"""
+    if not request.is_json:
+        return jsonify({"status": "error", "message": "Request must be JSON"}), 400
+
+    data = request.get_json()
+    name = data.get('name')
+    due_date = data.get('due_date', '')
+    priority = data.get('priority', 1)
+
+    if not name:
+        return jsonify({"status": "error", "message": "Task 'name' is required"}), 400
+
+    try:
+        db = connect_db()
+        db.execute(
+            'insert into ftasks (name, due_date, priority, status) values (?, ?, ?, 1)',
+            [name, due_date, priority]
+        )
+        db.commit()
+        db.close()
+        return jsonify({"status": "success", "message": "Task created successfully"}), 201
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
