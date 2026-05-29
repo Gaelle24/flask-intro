@@ -58,6 +58,6 @@ I wrote an automated testing script inside `test_api.py` to guarantee there are 
 powershell
 pytest --cov=api test_api.py
 
-= My 100% Code Coverage: Running this command proves that every single line of code I wrote passes its test perfectly!
+- My 100% Code Coverage: Running this command proves that every single line of code I wrote passes its test perfectly!
 
 
