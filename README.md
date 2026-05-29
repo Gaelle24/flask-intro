@@ -55,7 +55,6 @@ I wrote an automated testing script inside `test_api.py` to guarantee there are 
 - Crash Tests: I added tests that pretend the database crashed to make sure my app handles unexpected errors smoothly and sends back a proper JSON error response.
 - How I Run My Tests: I run this command in my terminal to execute my test suite and check my coverage score:
   
-powershell
 pytest --cov=api test_api.py
 
 - My 100% Code Coverage: Running this command proves that every single line of code I wrote passes its test perfectly!
